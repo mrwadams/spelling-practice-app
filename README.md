@@ -24,10 +24,20 @@ Welcome to the Spelling Practice App! This interactive web app is designed to he
 
 ## Installation
 
-To run this app locally, follow these steps:
+You can run the app straight from your browser! Visit [https://spellings.streamlit.app](https://spellings.streamlit.app) to start practising spellings.
+
+Alternatively, if you'd like to run the app locally:
 
 1. Clone this repository: `git clone https://github.com/mrwadams/Spelling-Practice-App.git`
 2. Install the required Python packages: `pip install -r requirements.txt`
 3. Run the app: `streamlit run app.py`
 
-Enjoy using the Spelling Practice App and happy spelling!
+## To Do List
+
+- [ ] Add a function to create a list of words to review based on any incorrect answers.
+
+## Feedback and Contributions
+
+Your feedback and contributions are welcome! If you have suggestions for improvements or find a bug, please feel free to open an issue or submit a pull request.
+
+Happy spelling!
