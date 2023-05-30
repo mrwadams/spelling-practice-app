@@ -2,6 +2,8 @@
 
 Welcome to the Spelling Practice App! This interactive web app is designed to help young students practise their spelling skills in a fun and engaging way. Created with Python and Streamlit, it focuses on the Common Exception Words, a list of words that children are expected to know how to spell by the end of each school year.
 
+![A screenshot of the app](screenshot.jpg)
+
 ## Features
 
 - Multiple word lists to choose from, tailored to different year groups.
