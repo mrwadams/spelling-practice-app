@@ -53,11 +53,12 @@ def app():
         
         Listen to the pronunciation of the word and type the correct spelling in the text box."
         
-        Press 'Check Answer' to see if your spelling is correct, and use the 'Next Word' button to go to a new word. Happy spelling!
+        Press 'Check Answer' to see if your spelling is correct. Happy spelling!
 
         You can also view the full word list by selecting the 'View Word List' page.
         """)
-        st.markdown("Created by [Matt Adams](https://www.linkedin.com/in/matthewrwadams/).")
+        st.markdown("Created by [Matt Adams](https://www.linkedin.com/in/matthewrwadams/)")
+        st.markdown("Source code available on [GitHub](https://github.com/mrwadams/spelling-practice-app)")
         st.markdown("""---""")
 
     # Sidebar for selecting word list and page
@@ -68,9 +69,11 @@ def app():
     )
     st.session_state.word_list = selected_word_list
 
-    # Initialize score if it doesn't exist in the session state
+    # Initialize score and total attempts if they don't exist in the session state
     if "score" not in st.session_state:
         st.session_state.score = 0
+    if "total_attempts" not in st.session_state:
+        st.session_state.total_attempts = 0
 
     # Sidebar for choosing the page
     page = st.sidebar.selectbox("Select a page:", ["Practise Spellings", "View Word List"])
@@ -87,52 +90,45 @@ def app():
     # Page to practice spellings
     elif page == "Practise Spellings":
         st.header("Practise Spellings 📝")
-        st.write(f"Score: {st.session_state.score}")
         if "word_list" in st.session_state:
             words = read_word_list(f"{st.session_state.word_list}.txt")
 
             if "selected_word" not in st.session_state:
                 st.session_state.selected_word = random.choice(words)
 
-            # Button to hear the word
-            if st.button("Hear Word👂"):
+            if st.button("New Word ✨"):
+                st.session_state.selected_word = random.choice(words)
                 audio_data = text_to_audio(st.session_state.selected_word)
                 base64_audio = audio_to_base64(audio_data)
                 st.markdown(f'<audio controls autoplay src="data:audio/mp3;base64,{base64_audio}"/>', unsafe_allow_html=True)
 
-            # Initialize user input key if it doesn't exist in the session state
             if "input_key" not in st.session_state:
                 st.session_state.input_key = 0
 
-            # Text input for user to enter the spelling
             user_input = st.text_input("Type the word:", key=st.session_state.input_key)
 
-            check_col, next_col = st.columns(2)
-            check_pressed = check_col.button("Check Answer ✅")
+            check_col = st.columns(1)
+            check_pressed = check_col[0].button("Check Answer ✅")
 
             # Check answer button logic
             if check_pressed:
                 if user_input.strip() == '':
                     st.info("Please enter a spelling before checking the answer.")
-                elif user_input.strip().lower() == st.session_state.selected_word.strip().lower():
-                    st.success("Correct!")
-                    st.markdown(f'<audio autoplay src="data:audio/wav;base64,{correct_audio_base64}"/>', unsafe_allow_html=True)
-                    st.session_state.score += 1
-                    st.session_state.selected_word = random.choice(words)
                 else:
-                    st.error(f"Oops! You typed '{user_input}'. The correct spelling is '{st.session_state.selected_word}'")
-                    st.markdown(f'<audio autoplay src="data:audio/wav;base64,{incorrect_audio_base64}"/>', unsafe_allow_html=True)
-                    st.session_state.selected_word = random.choice(words)
+                    st.session_state.total_attempts += 1
+                    if user_input.strip().lower() == st.session_state.selected_word.strip().lower():
+                        st.success("Correct!")
+                        st.markdown(f'<audio autoplay src="data:audio/wav;base64,{correct_audio_base64}"/>', unsafe_allow_html=True)
+                        st.session_state.score += 1
+                        st.session_state.selected_word = random.choice(words)
+                    else:
+                        st.error(f"Oops! You typed '{user_input}'. The correct spelling is '{st.session_state.selected_word}'")
+                        st.markdown(f'<audio autoplay src="data:audio/wav;base64,{incorrect_audio_base64}"/>', unsafe_allow_html=True)
+                        st.session_state.selected_word = random.choice(words)
 
-                # Reset the input field key to clear it
-                st.session_state.input_key += 1
+                    st.session_state.input_key += 1
 
-            # Next word button logic
-            next_pressed = next_col.button("Next Word ➡️")
-
-            if next_pressed:
-                st.session_state.selected_word = random.choice(words)
-                user_input = ''
+            st.write(f"Score: {st.session_state.score} out of {st.session_state.total_attempts}")
         else:
             st.warning("Please select a word list first.")
 
