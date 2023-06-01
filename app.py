@@ -43,10 +43,22 @@ incorrect_audio_base64 = audio_file_to_base64(INCORRECT_SOUND_PATH)
 def app():
     st.title("Spelling Practice App")
 
+    # Sidebar for selecting word list
+    selected_word_list = st.sidebar.selectbox(
+        "Choose a word list:",
+        [file[:-4] for file in sorted(os.listdir('word_lists')) if file.endswith('.txt')],
+        format_func=lambda x: WORD_LIST_ALIASES.get(x + '.txt', x)
+    )
+    st.session_state.word_list = selected_word_list
+
+    # Sidebar for choosing the page
+    page = st.sidebar.selectbox("Select a page:", ["Practise Spellings", "View Word List"])
+
+    st.sidebar.markdown("""---""")
     st.sidebar.header("How to Use")
     with st.sidebar:
         st.markdown("""
-        1. To start, simply choose a word list from the menu below.
+        1. To start, simply choose a word list from the menu above.
         
         2. Click 'New Word' to select a new word to spell.
 
@@ -72,14 +84,7 @@ def app():
         st.markdown("Created by [Matt Adams](https://www.linkedin.com/in/matthewrwadams/)")
         st.markdown("Source code available on [GitHub](https://github.com/mrwadams/spelling-practice-app)")
         st.markdown("""---""")
-
-    # Sidebar for selecting word list and page
-    selected_word_list = st.sidebar.selectbox(
-        "Choose a word list:",
-        [file[:-4] for file in sorted(os.listdir('word_lists')) if file.endswith('.txt')],
-        format_func=lambda x: WORD_LIST_ALIASES.get(x + '.txt', x)
-    )
-    st.session_state.word_list = selected_word_list
+    
 
     # Initialize score and total attempts if they don't exist in the session state
     if "score" not in st.session_state:
@@ -87,8 +92,6 @@ def app():
     if "total_attempts" not in st.session_state:
         st.session_state.total_attempts = 0
 
-    # Sidebar for choosing the page
-    page = st.sidebar.selectbox("Select a page:", ["Practise Spellings", "View Word List"])
 
     # Page to view the word list
     if page == "View Word List":
