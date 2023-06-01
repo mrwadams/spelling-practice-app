@@ -14,10 +14,10 @@ Welcome to the Spelling Practice App! This interactive web app is designed to he
 
 ## How to Use
 
-1. **Choose a Word List:** Start by selecting a word list from the sidebar menu. The lists are tailored to different year groups, so you can choose the one that suits your child's level.
+1. **Choose a Word List:** To start, simply choose a word list from the sidebar menu.
 
 2. **Select a Page:** You have two options: "Practise Spellings" and "View Word List".
-   - In "Practise Spellings", your child can listen to a word's pronunciation by clicking the "Hear Word" button, then type in the spelling. Click "Check Answer" to submit the spelling and get instant feedback.
+   - In "Practise Spellings", click 'New Word' to select a new word to spell. Listen to the word and then try to spell it in the text box. Press 'Check Answer' to see if your spelling is correct.
    - In "View Word List", you can see the full list of words for the selected year group.
 
 3. **Track Progress:** The app keeps score during each practise session, encouraging your child to improve their spelling skills.

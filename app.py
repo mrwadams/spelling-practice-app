@@ -42,20 +42,32 @@ incorrect_audio_base64 = audio_file_to_base64(INCORRECT_SOUND_PATH)
 # Main function to run the app
 def app():
     st.title("Spelling Practice App")
+
+    st.sidebar.header("How to Use")
+    with st.sidebar:
+        st.markdown("""
+        1. To start, simply choose a word list from the menu below.
+        
+        2. Click 'New Word' to select a new word to spell.
+
+        3. Listen to the the word and then try to spell it in the text box.
+        
+        4. Press 'Check Answer' to see if your spelling is correct. 
+        
+        Happy spelling!
+
+        You can also look at the full word lists by selecting the 'View Word List' page.
+        """)
+        st.markdown("""---""")
+
     st.sidebar.header("About")
 
     # Sidebar information about the app
     with st.sidebar:
         st.markdown("""
-        This app helps students practise spelling the Common Exception Words.
+        This app is designed to help children practise spelling the Common Exception Words.
         
-        To start, simply choose a word list from the menu and start practising.
-        
-        Listen to the pronunciation of the word and type the correct spelling in the text box."
-        
-        Press 'Check Answer' to see if your spelling is correct. Happy spelling!
-
-        You can also view the full word list by selecting the 'View Word List' page.
+        No personal data is collected or stored by this app. 
         """)
         st.markdown("Created by [Matt Adams](https://www.linkedin.com/in/matthewrwadams/)")
         st.markdown("Source code available on [GitHub](https://github.com/mrwadams/spelling-practice-app)")
