@@ -95,12 +95,16 @@ def app():
 
             if "selected_word" not in st.session_state:
                 st.session_state.selected_word = random.choice(words)
+                audio_data = text_to_audio(st.session_state.selected_word)
+                st.session_state.base64_audio = audio_to_base64(audio_data)
 
             if st.button("New Word ✨"):
                 st.session_state.selected_word = random.choice(words)
                 audio_data = text_to_audio(st.session_state.selected_word)
-                base64_audio = audio_to_base64(audio_data)
-                st.markdown(f'<audio controls autoplay src="data:audio/mp3;base64,{base64_audio}"/>', unsafe_allow_html=True)
+                st.session_state.base64_audio = audio_to_base64(audio_data)
+
+            # Render the audio widget every time the page is displayed
+            st.markdown(f'<audio controls autoplay src="data:audio/mp3;base64,{st.session_state.base64_audio}"/>', unsafe_allow_html=True)
 
             if "input_key" not in st.session_state:
                 st.session_state.input_key = 0
@@ -121,10 +125,14 @@ def app():
                         st.markdown(f'<audio autoplay src="data:audio/wav;base64,{correct_audio_base64}"/>', unsafe_allow_html=True)
                         st.session_state.score += 1
                         st.session_state.selected_word = random.choice(words)
+                        audio_data = text_to_audio(st.session_state.selected_word)
+                        st.session_state.base64_audio = audio_to_base64(audio_data)
                     else:
                         st.error(f"Oops! You typed '{user_input}'. The correct spelling is '{st.session_state.selected_word}'")
                         st.markdown(f'<audio autoplay src="data:audio/wav;base64,{incorrect_audio_base64}"/>', unsafe_allow_html=True)
                         st.session_state.selected_word = random.choice(words)
+                        audio_data = text_to_audio(st.session_state.selected_word)
+                        st.session_state.base64_audio = audio_to_base64(audio_data)
 
                     st.session_state.input_key += 1
 
