@@ -30,7 +30,7 @@ def audio_file_to_base64(file_path):
 
 # Function to convert text to audio using Google Text to Speech
 def text_to_audio(word):
-    tts = gTTS(word, lang='en')
+    tts = gTTS(word, lang='en-uk')
     audio_data = BytesIO()
     tts.write_to_fp(audio_data)
     audio_data.seek(0)
