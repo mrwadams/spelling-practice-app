@@ -105,6 +105,7 @@ def app():
     # Page to practice spellings
     elif page == "Practise Spellings":
         st.header("Practise Spellings 📝")
+        st.markdown("""---""")
         if "word_list" in st.session_state:
             words = read_word_list(f"{st.session_state.word_list}.txt")
 
@@ -152,8 +153,15 @@ def app():
                     st.session_state.input_key += 1
 
             st.write(f"Score: {st.session_state.score} out of {st.session_state.total_attempts}")
+            st.markdown("""---""")
+            with st.expander("Note for Teachers / Parents"):
+                st.markdown("""
+        It's best for children to use this app on a laptop / desktop computer. This is because software keyboards on mobile devices often autocorrect spelling mistakes, which defeats the purpose of a spelling app! 🙂
+        """)
         else:
             st.warning("Please select a word list first.")
+
+            
 
 if __name__ == "__main__":
     app()
