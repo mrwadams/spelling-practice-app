@@ -1,10 +1,11 @@
-import streamlit as st
-import random
-import os
-from gtts import gTTS
-from io import BytesIO
 import base64
+import os
+import random
+from io import BytesIO
+
 import pandas as pd
+import streamlit as st
+from gtts import gTTS
 
 # Constants for filenames and filepaths
 WORD_LIST_ALIASES = {
@@ -13,6 +14,10 @@ WORD_LIST_ALIASES = {
 }
 CORRECT_SOUND_PATH = "static/correct.wav"
 INCORRECT_SOUND_PATH = "static/incorrect.wav"
+
+# Initialize incorrect words set if it doesn't exist in the session state
+if "incorrect_words" not in st.session_state:
+    st.session_state.incorrect_words = set()
 
 # Function to read words from a text file
 def read_word_list(file_name):
@@ -52,7 +57,7 @@ def app():
     st.session_state.word_list = selected_word_list
 
     # Sidebar for choosing the page
-    page = st.sidebar.selectbox("Select a page:", ["Practise Spellings", "View Word List"])
+    page = st.sidebar.selectbox("Select a page:", ["Practise Spellings", "View Word List", "View Incorrectly Spelled Words"])
 
     st.sidebar.markdown("""---""")
     st.sidebar.header("How to Use")
@@ -64,11 +69,13 @@ def app():
 
         3. Listen to the the word and then try to spell it in the text box.
         
-        4. Press 'Check Answer' to see if your spelling is correct. 
+        4. Press 'Check Answer' to see if your spelling is correct.
         
         Happy spelling!
 
-        You can also look at the full word lists by selecting the 'View Word List' page.
+        You can look at the full word lists by selecting the 'View Word List' page.
+
+        You can also view the words you have spelt incorrectly by selecting the 'View Incorrectly Spelled Words' page.
         """)
         st.markdown("""---""")
 
@@ -146,6 +153,7 @@ def app():
                     else:
                         st.error(f"Oops! You typed '{user_input}'. The correct spelling is '{st.session_state.selected_word}'")
                         st.markdown(f'<audio autoplay src="data:audio/wav;base64,{incorrect_audio_base64}"/>', unsafe_allow_html=True)
+                        st.session_state.incorrect_words.add(st.session_state.selected_word)
                         st.session_state.selected_word = random.choice(words)
                         audio_data = text_to_audio(st.session_state.selected_word)
                         st.session_state.base64_audio = audio_to_base64(audio_data)
@@ -161,7 +169,12 @@ def app():
         else:
             st.warning("Please select a word list first.")
 
-            
+    elif page == "View Incorrectly Spelled Words":
+        st.header("Words to Review 📖")
+        if st.session_state.incorrect_words:
+            st.write(pd.DataFrame(sorted(list(st.session_state.incorrect_words)), columns=["Words"]))
+        else:
+            st.info("You have not misspelled any words in this session yet.")        
 
 if __name__ == "__main__":
     app()

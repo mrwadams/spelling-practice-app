@@ -10,17 +10,19 @@ Welcome to the Spelling Practice App! This interactive web app is designed to he
 - Interactive spelling practise session where the app reads a word and the child types in the spelling.
 - Instant feedback on each spelling with audio cues for correct and incorrect answers.
 - Ability to view the full list of words for each year group.
+- Review feature that keeps track of the words spelled incorrectly for further practice.
 - Scoring system to track progress.
 
 ## How to Use
 
 1. **Choose a Word List:** To start, simply choose a word list from the sidebar menu.
 
-2. **Select a Page:** You have two options: "Practise Spellings" and "View Word List".
+2. **Select a Page:** You have three options: "Practise Spellings", "View Word List" and "View Incorrectly Spelled Words".
    - In "Practise Spellings", click 'New Word' to select a new word to spell. Listen to the word and then try to spell it in the text box. Press 'Check Answer' to see if your spelling is correct.
    - In "View Word List", you can see the full list of words for the selected year group.
+   - In "View Incorrectly Spelled Words", you can review the words you've spelled incorrectly during the current session.
 
-3. **Track Progress:** The app keeps score during each practise session, encouraging your child to improve their spelling skills.
+3. **Track Progress:** The app keeps score during each practise session and provides a list of incorrectly spelled words for review, encouraging your child to improve their spelling skills.
 
 ## Installation
 
@@ -31,10 +33,6 @@ Alternatively, if you'd like to run the app locally:
 1. Clone this repository: `git clone https://github.com/mrwadams/Spelling-Practice-App.git`
 2. Install the required Python packages: `pip install -r requirements.txt`
 3. Run the app: `streamlit run app.py`
-
-## To Do List
-
-- [ ] Add a function to create a list of words to review based on any incorrect answers.
 
 ## Feedback and Contributions
 
