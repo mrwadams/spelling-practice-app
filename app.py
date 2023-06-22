@@ -11,6 +11,7 @@ from gtts import gTTS
 WORD_LIST_ALIASES = {
     'year_1_2.txt': 'Year 1 & 2',
     'year_3_4.txt': 'Year 3 & 4',
+    'year_3.txt': 'Year 3'
 }
 CORRECT_SOUND_PATH = "static/correct.wav"
 INCORRECT_SOUND_PATH = "static/incorrect.wav"
@@ -84,7 +85,7 @@ def app():
     # Sidebar information about the app
     with st.sidebar:
         st.markdown("""
-        This app is designed to help children practise spelling the Common Exception Words.
+        This app is designed to help children practise their school spelling lists, particularly the Common Exception Words.
         
         No personal data is collected or stored by this app. 
         """)
