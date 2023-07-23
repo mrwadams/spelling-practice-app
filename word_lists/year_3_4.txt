@@ -57,7 +57,7 @@ minute
 natural
 naughty
 notice
-occassion
+occasion
 occasionally
 often
 opposite
